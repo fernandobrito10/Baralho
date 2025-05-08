@@ -1,4 +1,6 @@
-﻿using Baralhos;
+﻿using System.Reflection.Metadata.Ecma335;
+using Baralhos;
+Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 Baralho baralho = new Baralho();
 Jogador jogador1 = new Jogador();
@@ -15,7 +17,13 @@ do {
     if(jog1 == 0) {
         jogador1.printMao();
         Console.Write("Jogador 1:\nDigite 1 para comprar mais uma carta ou 2 para desistir: ");
-        int escolha = int.Parse(Console.ReadLine());
+        int? escolha = int.Parse(Console.ReadLine());
+
+        if(escolha == null) 
+        {
+            Console.WriteLine("Valor nulo meu chapa!");
+        }
+
         if(escolha == 1) {
             jogador1.puxarCarta(baralho);
         }
@@ -24,7 +32,7 @@ do {
             jog1 = 1;
         }
     }
-    Thread.Sleep(2000);
+    mostrarLog();
     Console.Clear();
     if(jog2 == 0) {
         jogador2.printMao();
@@ -38,6 +46,7 @@ do {
             jog2 = 1;
         }
     }
+    mostrarLog();
 } while(jog1 == 0 || jog2 == 0);
 Console.Clear();
 int total1 = jogador1.contarTotal();
@@ -66,3 +75,11 @@ else if(total1 == total2)
 else
     Console.WriteLine("Ninguém venceu!");
 
+static void mostrarLog() {
+    Console.Clear();
+    Console.Write("🃃🃃🃃🃃Vire seu rosto, vez do outro jogador");
+    for(int i = 0; i < 3; i++) {
+        Console.Write(".");
+        Thread.Sleep(1000);
+    }
+}
