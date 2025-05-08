@@ -6,48 +6,44 @@ using System.Threading.Tasks;
 
 namespace Baralhos {
     public class Baralho {
-        private Carta[] carta = new Carta[52];
+        private List<Carta> cartas = new List<Carta>();
         public Baralho() {
 
         }
-        public Carta[] criarBaralho() {
+        public List<Carta> criarBaralho() {
             string[] valores = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
             string[] naipes = { "paus", "ouros", "espadas", "copas" };
-            int i = 0;
             foreach(string naipe in naipes) {
                 foreach(string valor in valores) {
-                    carta[i] = new Carta(valor, naipe);
-                    i++;
+                    cartas.Add(new Carta(valor, naipe));
 
                 }
             }
-            return carta;
-        }
-        public void printBaralho() {
-            for(int x = 0;x < 52;x++) {
-                Console.WriteLine($"{carta[x].Valor} de {carta[x].Naipe}");
-            }
-        }
-        public Carta[] embaralhar() {
-            Carta cartaAux;
-            List<int> numerosUtilizados = new List<int>();
-            Random rand = new Random();
-            for (int x = 0;x < 52;x++) {
-                int numAleatorio;
-                do {
-                    numAleatorio = rand.Next(0, 52);
-                } while (numerosUtilizados.Contains(numAleatorio));
-                numerosUtilizados.Add(numAleatorio);
-
-                cartaAux = carta[x];
-                carta[x] = carta[numAleatorio];
-                carta[numAleatorio] = cartaAux;
-                }
-            return carta;
+            return cartas;
         }
         public Carta ComprarCarta() {
-            Carta cartaComprada = carta[0];
+            if(cartas.Count == 0) {
+                return null;
+            }
+            Carta cartaComprada = cartas[0];
+            cartas.RemoveAt(0);
             return cartaComprada;
+        }
+        public void printBaralho() {
+            foreach(Carta carta in cartas) {
+                Console.WriteLine($"{carta.Valor} de {carta.Naipe}");
+            }
+        }
+        public void embaralhar() {
+            Random rand = new Random();
+            int n = cartas.Count;
+            for(int i = n - 1; i > 0; i--) {
+                int j = rand.Next(0, i + 1);
+
+                Carta temp = cartas[i];
+                cartas[i] = cartas[j];
+                cartas[j] = temp;
+            }
         }
     }
 }
