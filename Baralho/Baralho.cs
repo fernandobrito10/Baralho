@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Baralhos {
+﻿namespace Baralhos {
     public class Baralho {
         private List<Carta> cartas = new List<Carta>();
         public Baralho() {
 
         }
-        public List<Carta> criarBaralho() {
+        public List<Carta> CriarBaralho() {
             string[] valores = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
             string[] naipes = { "paus", "ouros", "espadas", "copas" };
             foreach(string naipe in naipes) {
@@ -29,12 +23,12 @@ namespace Baralhos {
             cartas.RemoveAt(0);
             return cartaComprada;
         }
-        public void printBaralho() {
+        public void PrintBaralho() {
             foreach(Carta carta in cartas) {
                 Console.WriteLine($"{carta.Valor} de {carta.Naipe}");
             }
         }
-        public void embaralhar() {
+        public void Embaralhar() {
             Random rand = new Random();
             int n = cartas.Count;
             for(int i = n - 1; i > 0; i--) {

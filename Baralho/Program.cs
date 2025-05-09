@@ -8,16 +8,16 @@ Jogador jogador2 = new Jogador();
 int jog1 = 0;
 int jog2 = 0;
 
-baralho.criarBaralho();
-baralho.embaralhar();
-jogador1.criarMao(baralho);
-jogador2.criarMao(baralho);
+baralho.CriarBaralho();
+baralho.Embaralhar();
+jogador1.CriarMao(baralho);
+jogador2.CriarMao(baralho);
 do {
     Console.Clear();
     if(jog1 == 0) {
-        jogador1.printMao();
+        jogador1.PrintMao();
         Console.Write("Jogador 1:\nDigite 1 para comprar mais uma carta ou 2 para desistir: ");
-        int? escolha = int.Parse(Console.ReadLine());
+        int? escolha = int.Parse(Console.ReadLine()!);
 
         if(escolha == null) 
         {
@@ -25,36 +25,36 @@ do {
         }
 
         if(escolha == 1) {
-            jogador1.puxarCarta(baralho);
+            jogador1.PuxarCarta(baralho);
         }
         else if(escolha == 2) {
             Console.WriteLine("Jogador 1 finalizou!");
             jog1 = 1;
         }
     }
-    mostrarLog();
+    mostrarLog(jog1, jog2);
     Console.Clear();
     if(jog2 == 0) {
-        jogador2.printMao();
+        jogador2.PrintMao();
         Console.Write("Jogador 2:\nDigite 1 para comprar mais uma carta ou 2 para desistir: ");
-        int escolha = int.Parse(Console.ReadLine());
+        int escolha = int.Parse(Console.ReadLine()!);
         if(escolha == 1) {
-            jogador2.puxarCarta(baralho);
+            jogador2.PuxarCarta(baralho);
         }
         else if(escolha == 2) {
             Console.WriteLine("Jogador 2 finalizou!");
             jog2 = 1;
         }
     }
-    mostrarLog();
+    mostrarLog(jog1, jog2);
 } while(jog1 == 0 || jog2 == 0);
 Console.Clear();
-int total1 = jogador1.contarTotal();
-int total2 = jogador2.contarTotal();
+int total1 = jogador1.ContarTotal();
+int total2 = jogador2.ContarTotal();
 Console.WriteLine($"Mão de jogador 1 ({total1} pontos): ");
-jogador1.printMao();
+jogador1.PrintMao();
 Console.WriteLine($"Mão de jogador 2 ({total2} pontos): ");
-jogador2.printMao();
+jogador2.PrintMao();
 
 if(total1 <= 21 && total2 <= 21) {
     if(total1 > total2)
@@ -75,11 +75,14 @@ else if(total1 == total2)
 else
     Console.WriteLine("Ninguém venceu!");
 
-static void mostrarLog() {
+static void mostrarLog(int jog1, int jog2) {
     Console.Clear();
-    Console.Write("🃃🃃🃃🃃Vire seu rosto, vez do outro jogador");
-    for(int i = 0; i < 3; i++) {
-        Console.Write(".");
-        Thread.Sleep(1000);
+    if(jog1 == 0 || jog2 == 0) {
+        Console.Write("Vire seu rosto, vez do outro jogador");
+        for (int i = 0; i < 3; i++) {
+            Console.Write(".");
+            Thread.Sleep(1000);
+        }
     }
+    
 }
